@@ -14,13 +14,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 
 @Composable
 fun CustomProgressIndicator(
@@ -36,7 +40,7 @@ fun CustomProgressIndicator(
     LaunchedEffect(key1 = indicatorValue) { animatedIndicatorValue.animateTo(indicatorValue.toFloat()) }
     val percentage = (animatedIndicatorValue.value / maxIndicatorValue) * 100
     val sweepAngle by animateFloatAsState(
-        targetValue = (2.4 * percentage).toFloat(),
+        targetValue = (4 * percentage),
         animationSpec = tween(1000),
         label = ""
     )
@@ -56,8 +60,12 @@ fun CustomProgressIndicator(
                     indicatorColor = foregroundColor,
                     indicatorStrokeWidth = foregroundIndicatorStrokeWidth
                 )
-            }
-    ) { }
+            },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = "${percentage.roundToInt()}%")
+    }
 }
 
 
